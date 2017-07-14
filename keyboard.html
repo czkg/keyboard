@@ -224,6 +224,7 @@ body {
         var currentRow = 0;
         var textname = "text#type";
         var totalWidth = 1180;
+        var isShift = false;
 
 
         function findContainingKey(x, y) {
@@ -242,6 +243,10 @@ body {
                     if(val == "space") {
                         val = " ";
                     }
+                    if(id == 'shift') {
+                      val = "";
+                      isShift = !isShift;
+                    }
                     if(val == "enter") {
                         val = "";
                         if(currentRow < 4) {
@@ -259,6 +264,9 @@ body {
                                 alltexts[currentRow] = alltexts[currentRow].slice(0, -1);
                             }
                         }
+                    }
+                    if(val != "" && val != " " && isShift == true) {
+                      val = val.toUpperCase();
                     }
                     var selector = textname + currentRow.toString().trim();
                     var currentWidth;
@@ -311,6 +319,9 @@ body {
                         // d3.select("rect.rectdis").remove();
                         // d3.select("text.textdis").remove();
                     });
+                    if(isShift) {
+                      d3.select("rect#shift").style("fill", "red");
+                    }
                     return;
                 }
 
